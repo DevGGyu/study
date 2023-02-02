@@ -4,11 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +43,28 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun MyListItem(item: String) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(10.dp),
+        elevation = 5.dp
+    ) {
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            ImageLoader(item = item)
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = item,
+                style = MaterialTheme.typography.h6,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+    }
+}
+
+@Composable
 fun ImageLoader(item: String) {
     val url =
         "https://www.ebookfrenzy.com/book_examples/car_logos/${item.substringBefore(" ")}_logo.png"
@@ -54,7 +79,7 @@ fun ImageLoader(item: String) {
 
 @Composable
 fun MainScreen(itemArray: Array<out String>) {
-    ImageLoader("Plymouth GTX")
+    MyListItem("Buick Roadmaster")
 }
 
 @Preview(showBackground = true)
