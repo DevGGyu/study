@@ -11,12 +11,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -97,20 +99,26 @@ fun MainScreen(itemArray: Array<out String>) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
-    LazyColumn {
-        groupedItems.forEach { (menufacturer, models) ->
-            stickyHeader {
-                Text(
-                    text = menufacturer,
-                    color = Color.White,
-                    modifier = Modifier
-                        .background(Color.Gray)
-                        .padding(5.dp)
-                        .fillMaxWidth()
-                )
-            }
-            items(models) { model ->
-                MyListItem(model, onItemClick = onListItemClick)
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+    val displayButton = listState.firstVisibleItemIndex > 5
+
+    Box {
+        LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 40.dp)) {
+            groupedItems.forEach { (menufacturer, models) ->
+                stickyHeader {
+                    Text(
+                        text = menufacturer,
+                        color = Color.White,
+                        modifier = Modifier
+                            .background(Color.Gray)
+                            .padding(5.dp)
+                            .fillMaxWidth()
+                    )
+                }
+                items(models) { model ->
+                    MyListItem(model, onItemClick = onListItemClick)
+                }
             }
         }
     }
