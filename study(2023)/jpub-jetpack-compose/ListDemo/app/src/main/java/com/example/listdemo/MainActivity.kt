@@ -3,6 +3,7 @@ package com.example.listdemo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,7 +41,19 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    ColumnList()
+    RowList()
+}
+
+@Composable
+fun RowList() {
+
+    val scrollState = rememberScrollState()
+
+    Row(Modifier.horizontalScroll(scrollState)) {
+        repeat(50) {
+            Text(" $it ", style = MaterialTheme.typography.h1, modifier = Modifier.padding(5.dp))
+        }
+    }
 }
 
 @Composable
