@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -83,6 +86,7 @@ fun ImageLoader(item: String) {
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen(itemArray: Array<out String>) {
 
@@ -95,6 +99,16 @@ fun MainScreen(itemArray: Array<out String>) {
 
     LazyColumn {
         groupedItems.forEach { (menufacturer, models) ->
+            stickyHeader {
+                Text(
+                    text = menufacturer,
+                    color = Color.White,
+                    modifier = Modifier
+                        .background(Color.Gray)
+                        .padding(5.dp)
+                        .fillMaxWidth()
+                )
+            }
             items(models) { model ->
                 MyListItem(model, onItemClick = onListItemClick)
             }
