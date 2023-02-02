@@ -87,14 +87,17 @@ fun ImageLoader(item: String) {
 fun MainScreen(itemArray: Array<out String>) {
 
     val context = LocalContext.current
+    val groupedItems = itemArray.groupBy { it.substringBefore(" ") }
 
     val onListItemClick = { text: String ->
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 
     LazyColumn {
-        items(itemArray) { model ->
-            MyListItem(model, onItemClick = onListItemClick)
+        groupedItems.forEach { (menufacturer, models) ->
+            items(models) { model ->
+                MyListItem(model, onItemClick = onListItemClick)
+            }
         }
     }
 }
