@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -79,7 +81,11 @@ fun ImageLoader(item: String) {
 
 @Composable
 fun MainScreen(itemArray: Array<out String>) {
-    MyListItem("Buick Roadmaster")
+    LazyColumn {
+        items(itemArray) { model ->
+            MyListItem(model)
+        }
+    }
 }
 
 @Preview(showBackground = true)
