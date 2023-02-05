@@ -57,7 +57,12 @@ fun MotionDemo() {
             BoxPosition.Start -> 0.dp
             BoxPosition.End -> screenWidth - boxSideLength
         },
-        animationSpec = spring(dampingRatio = Spring.DampingRatioHighBouncy, stiffness = Spring.StiffnessVeryLow)
+        animationSpec = keyframes {
+            durationMillis = 1000
+            100.dp.at(10).with(LinearEasing)
+            110.dp.at(500).with(FastOutSlowInEasing)
+            200.dp.at(700).with(LinearOutSlowInEasing)
+        }
     )
 
     Column(modifier = Modifier.fillMaxWidth()) {
