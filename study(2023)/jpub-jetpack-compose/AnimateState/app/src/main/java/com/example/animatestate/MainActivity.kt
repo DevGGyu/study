@@ -3,6 +3,7 @@ package com.example.animatestate
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -38,6 +39,66 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TransitionDemo() {
+    var boxState by remember { mutableStateOf(BoxPosition.Start) }
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val transition = updateTransition(targetState = boxState, label = "Color and Motion")
+
+    val animatedColor: Color by transition.animateColor(
+        transitionSpec = { tween(4000) },
+        label = ""
+    ) { state ->
+        when (state) {
+            BoxPosition.Start -> Color.Red
+            BoxPosition.End -> Color.Magenta
+        }
+    }
+
+    val animatedOffset: Dp by transition.animateDp(
+        transitionSpec = { tween(4000) },
+        label = ""
+    ) { state ->
+        when (state) {
+            BoxPosition.Start -> 0.dp
+            BoxPosition.End -> screenWidth - 70.dp
+        }
+    }
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .offset(x = animatedOffset, y = 20.dp)
+                .size(70.dp)
+                .background(animatedColor)
+        )
+
+        Spacer(modifier = Modifier.height(50.dp))
+
+        Button(
+            onClick = {
+                boxState = when (boxState) {
+                    BoxPosition.Start -> BoxPosition.End
+                    BoxPosition.End -> BoxPosition.Start
+                }
+            },
+            modifier = Modifier
+                .padding(20.dp)
+                .align(Alignment.CenterHorizontally)
+        ) {
+            Text(text = "Start Animation")
+        }
+    }
+}
+
+@Preview
+@Composable
+fun TransitionDemoPreview() {
+    AnimateStateTheme {
+        TransitionDemo()
     }
 }
 
