@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.canvasdemo.ui.theme.CanvasDemoTheme
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    DrawPoints()
+    DrawImage()
 }
 
 @Preview(showBackground = true)
@@ -48,6 +49,22 @@ fun MainScreen() {
 fun DefaultPreview() {
     CanvasDemoTheme {
         MainScreen()
+    }
+}
+
+@Composable
+fun DrawImage() {
+    val image = ImageBitmap.imageResource(id = R.drawable.vacation)
+
+    Canvas(modifier = Modifier.size(360.dp, 270.dp)) {
+        drawImage(
+            image = image,
+            topLeft = Offset(x = 0f, y = 0f),
+            colorFilter = ColorFilter.tint(
+                color = Color(0xADFFAA2E),
+                blendMode = BlendMode.ColorBurn
+            )
+        )
     }
 }
 
