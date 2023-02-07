@@ -9,17 +9,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.drawscope.DrawStyle
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.inset
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.canvasdemo.ui.theme.CanvasDemoTheme
@@ -57,15 +52,23 @@ fun DefaultPreview() {
 @Composable
 fun DrawRect() {
     Canvas(modifier = Modifier.size(300.dp)) {
-        val size = Size(200.dp.toPx(), 200.dp.toPx())
+        rotate(45f) {
+            drawRect(
+                color = Color.Blue,
+                topLeft = Offset(200f, 200f),
+                size = size / 2f
+            )
+        }
 
-        drawRoundRect(
-            color = Color.Blue,
-            size = size,
-            topLeft = Offset(20f, 20f),
-            style = Stroke(width = 8.dp.toPx()),
-            cornerRadius = CornerRadius(x = 30.dp.toPx(), y = 30.dp.toPx())
-        )
+//        val size = Size(200.dp.toPx(), 200.dp.toPx())
+
+//        drawRoundRect(
+//            color = Color.Blue,
+//            size = size,
+//            topLeft = Offset(20f, 20f),
+//            style = Stroke(width = 8.dp.toPx()),
+//            cornerRadius = CornerRadius(x = 30.dp.toPx(), y = 30.dp.toPx())
+//        )
 
 //        val size = Size(600f, 250f)
 //        val size = Size(200.dp.toPx(), 100.dp.toPx())
