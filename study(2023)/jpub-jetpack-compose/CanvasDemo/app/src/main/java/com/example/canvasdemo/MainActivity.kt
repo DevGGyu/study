@@ -12,10 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +38,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    DrawArc()
+    DrawPath()
 }
 
 @Preview(showBackground = true)
@@ -49,6 +46,24 @@ fun MainScreen() {
 fun DefaultPreview() {
     CanvasDemoTheme {
         MainScreen()
+    }
+}
+
+@Composable
+fun DrawPath() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        val path = Path().apply {
+            moveTo(0f, 0f)
+            quadraticBezierTo(50.dp.toPx(), 200.dp.toPx(), 300.dp.toPx(), 300.dp.toPx())
+            lineTo(270.dp.toPx(), 100.dp.toPx())
+            quadraticBezierTo(60.dp.toPx(), 80.dp.toPx(), 0f, 0f)
+            close()
+        }
+
+        drawPath(
+            path = path,
+            Color.Blue
+        )
     }
 }
 
