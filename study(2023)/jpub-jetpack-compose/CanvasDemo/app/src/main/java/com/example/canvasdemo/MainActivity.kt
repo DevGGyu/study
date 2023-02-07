@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
@@ -12,8 +11,10 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    DrawRect()
+    DrawOval()
 }
 
 @Preview(showBackground = true)
@@ -46,6 +47,38 @@ fun MainScreen() {
 fun DefaultPreview() {
     CanvasDemoTheme {
         MainScreen()
+    }
+}
+
+@Composable
+fun DrawOval() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        val canvasWidth = size.width
+        val canvasHeight = size.height
+
+        drawOval(
+            color = Color.Blue,
+            topLeft = Offset(x = 25.dp.toPx(), y = 90.dp.toPx()),
+            size = Size(
+                width = canvasWidth - 50.dp.toPx(),
+                height = canvasHeight / 2 - 50.dp.toPx()
+            ),
+            style = Stroke(width = 12.dp.toPx())
+        )
+    }
+}
+
+@Composable
+fun DrawCircle() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        val canvasWidth = size.width
+        val canvasHeight = size.height
+
+        drawCircle(
+            color = Color.Blue,
+            center = center,
+            radius = 120.dp.toPx()
+        )
     }
 }
 
