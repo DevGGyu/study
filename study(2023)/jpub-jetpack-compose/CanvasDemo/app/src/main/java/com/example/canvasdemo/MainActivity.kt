@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    ShadowCircle()
+    DrawArc()
 }
 
 @Preview(showBackground = true)
@@ -49,6 +49,19 @@ fun MainScreen() {
 fun DefaultPreview() {
     CanvasDemoTheme {
         MainScreen()
+    }
+}
+
+@Composable
+fun DrawArc() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        drawArc(
+            Color.Blue,
+            startAngle = 20f,
+            sweepAngle = 90f,
+            useCenter = true,
+            size = Size(250.dp.toPx(), 250.dp.toPx())
+        )
     }
 }
 
