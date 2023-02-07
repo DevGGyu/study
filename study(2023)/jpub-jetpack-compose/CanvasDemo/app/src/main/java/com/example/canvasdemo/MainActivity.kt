@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.canvasdemo.ui.theme.CanvasDemoTheme
@@ -57,7 +58,10 @@ fun DrawLine() {
             start = Offset(x = 0f, y = 0f),
             end = Offset(x = width, y = height),
             color = Color.Blue,
-            strokeWidth = 16.0f
+            strokeWidth = 16.0f,
+            pathEffect = PathEffect.dashPathEffect(
+                floatArrayOf(30f, 10f, 10f, 10f), phase = 0f
+            )
         )
     }
 }
