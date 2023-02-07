@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.canvasdemo.ui.theme.CanvasDemoTheme
+import kotlin.math.PI
+import kotlin.math.sin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +40,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    DrawPath()
+    DrawPoints()
 }
 
 @Preview(showBackground = true)
@@ -46,6 +48,27 @@ fun MainScreen() {
 fun DefaultPreview() {
     CanvasDemoTheme {
         MainScreen()
+    }
+}
+
+@Composable
+fun DrawPoints() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        val height = size.height
+        val width = size.width
+        val points = mutableListOf<Offset>()
+
+        for (x in 0..size.width.toInt()) {
+            val y = (sin(x * (2f * PI / width)) * (height / 2) + (height / 2)).toFloat()
+            points.add(Offset(x.toFloat(), y))
+        }
+
+        drawPoints(
+            points = points,
+            strokeWidth = 3f,
+            pointMode = PointMode.Points,
+            color = Color.Blue
+        )
     }
 }
 
