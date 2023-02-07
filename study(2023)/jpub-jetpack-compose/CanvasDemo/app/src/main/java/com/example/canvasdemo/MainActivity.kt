@@ -12,8 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    DrawOval()
+    ShadowCircle()
 }
 
 @Preview(showBackground = true)
@@ -47,6 +49,68 @@ fun MainScreen() {
 fun DefaultPreview() {
     CanvasDemoTheme {
         MainScreen()
+    }
+}
+
+@Composable
+fun ShadowCircle() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        val radius = 150.dp.toPx()
+        val colorList: List<Color> = listOf(Color.Blue, Color.Black)
+        val brush = Brush.horizontalGradient(
+            colors = colorList,
+            startX = 0f,
+            endX = 300.dp.toPx(),
+            tileMode = TileMode.Repeated
+        )
+
+        drawCircle(
+            brush = brush,
+            radius = radius
+        )
+    }
+}
+
+@Composable
+fun RadialFill() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        val canvasWidth = size.width
+        val canvasHeight = size.height
+        val radius = 150.dp.toPx()
+        val colorList: List<Color> = listOf(Color.Red, Color.Blue, Color.Magenta, Color.Yellow, Color.Green, Color.Cyan)
+        val brush = Brush.radialGradient(
+            colors = colorList,
+            center = center,
+            radius = radius,
+            tileMode = TileMode.Repeated
+        )
+
+        drawCircle(
+            brush = brush,
+            center = center,
+            radius = radius
+        )
+    }
+}
+
+@Composable
+fun GradientFill() {
+    Canvas(modifier = Modifier.size(300.dp)) {
+        val canvasSize = size
+
+        val colorList: List<Color> = listOf(Color.Red, Color.Blue, Color.Magenta, Color.Yellow, Color.Green, Color.Cyan)
+
+        val brush = Brush.horizontalGradient(
+            colors = colorList,
+            startX = 0f,
+            endX = 300.dp.toPx(),
+            tileMode = TileMode.Repeated
+        )
+
+        drawRect(
+            brush = brush,
+            size = canvasSize
+        )
     }
 }
 
