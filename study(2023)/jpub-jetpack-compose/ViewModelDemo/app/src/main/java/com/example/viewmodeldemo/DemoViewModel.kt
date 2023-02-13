@@ -1,21 +1,23 @@
 package com.example.viewmodeldemo
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlin.math.roundToInt
 
-class DemoViewModel: ViewModel() {
+class DemoViewModel : ViewModel() {
 
-    var isFahrenheit by mutableStateOf(true)
-    var result by mutableStateOf("0")
+    private val _isFahrenheit = MutableLiveData(true)
+    val isFahrenheit: LiveData<Boolean> = _isFahrenheit
+
+    private val _result = MutableLiveData("")
+    val result: LiveData<String> = _result
 
     fun convertTemp(temp: String) {
-        result = try {
+        _result.value = try {
             val tempInt = temp.toInt()
 
-            if (isFahrenheit) {
+            if (_isFahrenheit.value == true) {
                 ((tempInt - 32) * 0.5556).roundToInt().toString()
             } else {
                 ((tempInt * 1.8) + 32).roundToInt().toString()
@@ -26,6 +28,6 @@ class DemoViewModel: ViewModel() {
     }
 
     fun switchChange() {
-        isFahrenheit = !isFahrenheit
+        _isFahrenheit.value = _isFahrenheit.value != true
     }
 }

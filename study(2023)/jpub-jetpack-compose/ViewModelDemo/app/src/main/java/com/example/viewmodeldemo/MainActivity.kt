@@ -1,7 +1,6 @@
 package com.example.viewmodeldemo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.Crossfade
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.example.viewmodeldemo.ui.theme.ViewModelDemoTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ScreenSetup()
+                    val viewModel = DemoViewModel()
+                    ScreenSetup(viewModel)
                 }
             }
         }
@@ -39,11 +41,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ScreenSetup(viewModel: DemoViewModel = DemoViewModel()) {
-    Log.d("DefaultPreview", "isFahrenheit : ${viewModel.isFahrenheit}")
+fun ScreenSetup(viewModel: DemoViewModel) {
     MainScreen(
-        isFahrenheit = viewModel.isFahrenheit,
-        result = viewModel.result,
+        isFahrenheit = viewModel.isFahrenheit.observeAsState().value ?: true,
+        result = viewModel.result.observeAsState().value ?: "",
         convertTemp = { viewModel.convertTemp(it) },
         switchChange = { viewModel.switchChange() }
     )
@@ -77,19 +78,6 @@ fun MainScreen(
         Button(onClick = { convertTemp(textState) }) {
             Text(text = "Convert Temperature")
         }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun DefaultPreview(model: DemoViewModel = DemoViewModel()) {
-    ViewModelDemoTheme {
-        MainScreen(
-            isFahrenheit = model.isFahrenheit,
-            result = model.result,
-            convertTemp = { model.convertTemp(it) },
-            switchChange = { model.switchChange() }
-        )
     }
 }
 
@@ -129,5 +117,18 @@ fun InputRow(
                 false -> Text(text = "\u2103", style = MaterialTheme.typography.h4)
             }
         }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun DefaultPreview(model: DemoViewModel = DemoViewModel()) {
+    ViewModelDemoTheme {
+        MainScreen(
+            isFahrenheit = model.isFahrenheit.value ?: true,
+            result = model.result.value ?: "",
+            convertTemp = { model.convertTemp(it) },
+            switchChange = { model.switchChange() }
+        )
     }
 }
