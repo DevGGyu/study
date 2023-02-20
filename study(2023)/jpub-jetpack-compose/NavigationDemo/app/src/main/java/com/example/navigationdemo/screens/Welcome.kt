@@ -12,7 +12,7 @@ import androidx.navigation.NavHostController
 import com.example.navigationdemo.NavRoutes
 
 @Composable
-fun Welcome(navController: NavHostController) {
+fun Welcome(navController: NavHostController, userName: String?) {
 
     Box(
         modifier = Modifier
@@ -20,12 +20,14 @@ fun Welcome(navController: NavHostController) {
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Welcome", style = MaterialTheme.typography.h5)
+            Text(text = "Welcome $userName", style = MaterialTheme.typography.h5)
 
             Spacer(modifier = Modifier.size(30.dp))
 
             Button(onClick = {
-                navController.navigate(NavRoutes.Profile.route)
+                navController.navigate(NavRoutes.Profile.route) {
+                    popUpTo(NavRoutes.Home.route)
+                }
             }) {
                 Text(text = "Set up your Profile")
             }

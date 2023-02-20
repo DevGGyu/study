@@ -37,7 +37,7 @@ fun Home(navController: NavHostController) {
             Spacer(modifier = Modifier.size(30.dp))
 
             Button(onClick = {
-                navController.navigate(NavRoutes.Welcome.route)
+                navController.navigate(NavRoutes.Welcome.route + "/$userName")
             }) {
                 Text(text = "Register")
             }
