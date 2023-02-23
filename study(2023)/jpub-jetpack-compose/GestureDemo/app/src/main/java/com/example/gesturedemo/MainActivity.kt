@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    TabPressDemo()
+    DragDemo()
 }
 
 @Preview(showBackground = true)
