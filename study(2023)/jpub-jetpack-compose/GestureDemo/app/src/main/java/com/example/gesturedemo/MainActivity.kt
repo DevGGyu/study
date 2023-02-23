@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    DragDemo()
+    PointerInputDrag()
 }
 
 @Preview(showBackground = true)
