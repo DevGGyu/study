@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    PointerInputDrag()
+    ScrollableModifier()
 }
 
 @Preview(showBackground = true)
