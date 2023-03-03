@@ -17,9 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flowdemo.ui.theme.FlowDemoTheme
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.fold
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,15 +44,15 @@ fun ScreenSetup(viewModel: DemoViewModel = viewModel()) {
 
 @Composable
 fun MainScreen(viewModel: DemoViewModel) {
-    var count by remember { mutableStateOf(0) }
+    var count by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.myFlow
-            .flatMapMerge { viewModel.doubleIt(it) }
-            .collect {
-                count = it
-                println("Count = $it")
-            }
+        val flow1 = (1..5).asFlow()
+            .onEach { delay(1000) }
+        val flow2 = flowOf("one", "two", "three", "four")
+            .onEach { delay(1500) }
+        flow1.combine(flow2) { value, string -> "$value, $string" }
+            .collect { count = it }
     }
 
     Column(
