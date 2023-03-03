@@ -13,6 +13,10 @@ class DemoViewModel : ViewModel() {
         }
     }
 
+    val newFlow = myFlow.map {
+        "Current value = $it"
+    }
+
 //    val newFlow = myFlow
 //        .transform {
 //            emit("Value = $it")
@@ -28,8 +32,4 @@ class DemoViewModel : ViewModel() {
 //        .map {
 //            "Current value = $it"
 //        }
-
-    val newFlow = myFlow.map {
-        "Current value = $it"
-    }
 }
