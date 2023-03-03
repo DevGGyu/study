@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -45,7 +43,19 @@ fun ScreenSetup(viewModel: DemoViewModel = viewModel()) {
 
 @Composable
 fun MainScreen(flow: Flow<String>) {
-    val count by flow.collectAsState(initial = 0)
+    var count by remember {
+        mutableStateOf<String>("Current value =")
+    }
+
+    LaunchedEffect(Unit) {
+        try {
+            flow.collect {
+                count = it
+            }
+        } finally {
+            count = "Flow stream ended."
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
