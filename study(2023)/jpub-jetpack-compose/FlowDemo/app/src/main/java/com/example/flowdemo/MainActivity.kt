@@ -17,10 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flowdemo.ui.theme.FlowDemoTheme
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.buffer
-import kotlin.system.measureTimeMillis
+import kotlinx.coroutines.flow.fold
+import kotlinx.coroutines.flow.reduce
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,25 +40,19 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ScreenSetup(viewModel: DemoViewModel = viewModel()) {
-    MainScreen(viewModel.newFlow)
+    MainScreen(viewModel.myFlow)
 }
 
 @Composable
-fun MainScreen(flow: Flow<String>) {
-    var count by remember {
-        mutableStateOf<String>("Current value =")
-    }
+fun MainScreen(flow: Flow<Int>) {
+    var count by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
-        val elapsedTime = measureTimeMillis {
-            flow
-                .buffer()
-                .collect {
-                count = it
-                delay(1000)
+        flow
+            .fold(10) { accumulator, value ->
+                count = accumulator
+                accumulator + value
             }
-        }
-        count = "Duration = $elapsedTime"
     }
 
     Column(
