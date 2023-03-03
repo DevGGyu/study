@@ -7,15 +7,28 @@ import kotlinx.coroutines.flow.*
 class DemoViewModel : ViewModel() {
 
     val myFlow: Flow<Int> = flow {
-        for (i in 0..9) {
+        for (i in 1..5) {
+            delay(1000)
             emit(i)
-            delay(2000)
         }
     }
 
-    val newFlow = myFlow.map {
-        "Current value = $it"
+    fun doubleIt(value: Int) = flow {
+        emit(value)
+        delay(1000)
+        emit(value + value)
     }
+
+//    val myFlow: Flow<Int> = flow {
+//        for (i in 0..9) {
+//            emit(i)
+//            delay(2000)
+//        }
+//    }
+//
+//    val newFlow = myFlow.map {
+//        "Current value = $it"
+//    }
 
 //    val newFlow = myFlow
 //        .transform {
